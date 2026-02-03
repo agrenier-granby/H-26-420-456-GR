@@ -1,0 +1,31 @@
+@model S2_B_MVC.ViewModels.PasserInfoVM
+
+@{
+    ViewData["Title"] = "Statistiques par Pays";
+}
+
+<div class="container mt-5">
+    <h1>Nombre d'Employés par Pays</h1>
+    
+    <div class="table-responsive mt-4">
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Pays</th>
+                    <th>Nombre d'Employés</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var country in Model.CountriesInfo)
+                {
+                    <tr>
+                        <td>@country.CountryName</td>
+                        <td>
+                            <span class="badge bg-info text-dark">@country.EmployeeCount</span>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
