@@ -1,0 +1,59 @@
+@model S4_A_MVC.ViewModels.TasksIndexVM
+
+@{
+    ViewData["Title"] = "Liste des tâches";
+}
+
+<h2>
+    @if (!string.IsNullOrWhiteSpace(Model.Category))
+    {
+        @:Liste des tâches (@Model.Category)
+    }
+    else
+    {
+        @:Liste des tâches
+    }
+</h2>
+
+@if (!string.IsNullOrWhiteSpace(Model.Category))
+{
+    <a asp-controller="Tasks" asp-action="Index" class="btn btn-secondary mb-3">
+        Retourner à la liste de tâches complètes
+    </a>
+}
+
+<a asp-action="Create" class="btn btn-primary mb-3">Créer une nouvelle tâche</a>
+
+@if (Model.Tasks.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Description</th>
+                <th>Catégorie</th>
+                <th>Statut</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var task in Model.Tasks)
+            {
+                <partial name="_TaskRowPartial" model="task" />
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Aucune tâche disponible.</p>
+}
+
+<hr />
+<h4>Démonstration ViewData/ViewBag/TempData</h4>
+<p><strong>ViewData de l'index:</strong> @ViewData["IndexViewData"]</p>
+<p><strong>ViewBag de l'index:</strong> @ViewBag.IndexViewBag</p>
+<p><strong>TempData de l'index:</strong> @TempData["IndexTempData"]</p>
+<p><strong>ViewData de la création:</strong> @ViewData["CreateViewData"]</p>
+<p><strong>ViewBag de la création:</strong> @ViewBag.CreateViewBag</p>
+<p><strong>TempData de la création:</strong> @TempData["CreateTempData"]</p>

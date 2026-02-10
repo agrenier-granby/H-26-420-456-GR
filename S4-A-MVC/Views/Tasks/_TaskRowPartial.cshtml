@@ -1,0 +1,35 @@
+@model S4_A_MVC.Models.TaskItem
+
+<tr>
+    <td>@Model.Title</td>
+    <td>@Model.Description</td>
+    <td>
+        @if (!string.IsNullOrWhiteSpace(Model.Category))
+        {
+            <a asp-controller="Tasks" asp-action="Index" asp-route-category="@Model.Category">
+                @Model.Category
+            </a>
+        }
+        else
+        {
+            <span class="text-muted">Aucune</span>
+        }
+    </td>
+    <td>
+        @if (Model.IsCompleted)
+        {
+            <span class="badge bg-success">Complétée</span>
+        }
+        else
+        {
+            <span class="badge bg-warning">En cours</span>
+        }
+    </td>
+    <td>
+        @if (!Model.IsCompleted)
+        {
+            <a asp-action="Complete" asp-route-id="@Model.Id" class="btn btn-sm btn-success">Terminer</a>
+        }
+        <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-sm btn-danger">Supprimer</a>
+    </td>
+</tr>

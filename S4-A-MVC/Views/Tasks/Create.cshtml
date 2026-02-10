@@ -1,0 +1,41 @@
+@model S4_A_MVC.ViewModels.CreateTaskVM
+
+@{
+    ViewData["Title"] = "Créer une tâche";
+}
+
+<h2>Créer une nouvelle tâche</h2>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label">Titre</label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label">Description</label>
+        <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Category" class="form-label">Catégorie</label>
+        <input asp-for="Category" class="form-control" placeholder="Ex: École, Travail, Personnel" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Créer</button>
+    <a asp-action="Index" class="btn btn-secondary">Annuler</a>
+</form>
+
+<hr />
+<h4>Démonstration ViewData/ViewBag/TempData</h4>
+<p><strong>ViewData de l'index:</strong> @ViewData["IndexViewData"]</p>
+<p><strong>ViewBag de l'index:</strong> @ViewBag.IndexViewBag</p>
+<p><strong>TempData de l'index:</strong> @TempData["IndexTempData"]</p>
+<p><strong>ViewData de la création:</strong> @ViewData["CreateViewData"]</p>
+<p><strong>ViewBag de la création:</strong> @ViewBag.CreateViewBag</p>
+<p><strong>TempData de la création:</strong> @TempData["CreateTempData"]</p>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
