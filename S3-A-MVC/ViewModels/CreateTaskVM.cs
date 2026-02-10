@@ -1,4 +1,4 @@
-namespace S4_A_MVC.ViewModels
+namespace S3_A_MVC.ViewModels
 {
     public class CreateTaskVM
     {

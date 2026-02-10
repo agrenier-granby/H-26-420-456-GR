@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using S4_A_MVC.Models;
-using S4_A_MVC.ViewModels;
+using S3_A_MVC.Models;
+using S3_A_MVC.ViewModels;
 
-namespace S4_A_MVC.Controllers
+namespace S3_A_MVC.Controllers
 {
     public class TasksController : Controller
     {

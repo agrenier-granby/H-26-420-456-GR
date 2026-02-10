@@ -1,4 +1,4 @@
-namespace S4_A_MVC.Models
+namespace S3_A_MVC.Models
 {
     public class TaskItem
     {

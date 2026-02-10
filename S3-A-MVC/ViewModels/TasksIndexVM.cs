@@ -1,6 +1,6 @@
-using S4_A_MVC.Models;
+using S3_A_MVC.Models;
 
-namespace S4_A_MVC.ViewModels
+namespace S3_A_MVC.ViewModels
 {
     public class TasksIndexVM
     {
