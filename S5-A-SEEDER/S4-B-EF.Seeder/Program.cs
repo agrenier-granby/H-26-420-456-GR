@@ -1,6 +1,6 @@
 ﻿using Bogus;
-using S4_B_EF.Models;
-using S4_B_EF.Seeder;
+using S5_A_SEEDER.Models;
+using S5_A_SEEDER.Seeder;
 
 public partial class Program
 {

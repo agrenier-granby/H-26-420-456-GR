@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using S4_B_EF.Data;
+using S5_A_SEEDER.Data;
 
-namespace S4_B_EF.Seeder
+namespace S5_A_SEEDER.Seeder
 {
     public class DbContextFactory
     {

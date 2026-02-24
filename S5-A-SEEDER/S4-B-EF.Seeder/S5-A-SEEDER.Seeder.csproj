@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\S4-B-EF\S4-B-EF.csproj" />
+    <ProjectReference Include="..\S4-B-EF\S5-A-SEEDER.csproj" />
   </ItemGroup>
 
 </Project>
