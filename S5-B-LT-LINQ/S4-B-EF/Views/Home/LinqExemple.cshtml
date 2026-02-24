@@ -1,0 +1,31 @@
+﻿@model IEnumerable<S5_B_LT_LINQ.Models.Employe>
+@{
+}
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Age</th>
+            <th>Salaire</th>
+            <th>Date embauche</th>
+            <th>Pays d'origine</th>
+            <th>Departement</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Employe e in Model)
+        {
+            <tr>
+                <td>@e.Id</td>
+                <td>@e.Nom</td>
+                <td>@e.Age</td>
+                <td>@e.SalaireAnnuel</td>
+                <td>@e.DateEmbauche</td>
+                <td>@e.PaysOrigine?.Nom</td>
+                <td>@e.Departement?.Nom</td>
+            </tr>
+        }
+    </tbody>
+</table>
