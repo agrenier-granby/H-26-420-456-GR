@@ -1,0 +1,24 @@
+@model List<S5_B_LT_LINQ.Models.Employe>
+@{
+    ViewData["Title"] = "Lazy Loading";
+}
+<h1>Lazy Loading</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Pays d'origine</th>
+            <th>Département</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Employe e in Model)
+        {
+            <tr>
+                <td>@e.Nom</td>
+                <td>@e.PaysOrigine?.Nom</td>
+                <td>@e.Departement?.Nom</td>
+            </tr>
+        }
+    </tbody>
+</table>

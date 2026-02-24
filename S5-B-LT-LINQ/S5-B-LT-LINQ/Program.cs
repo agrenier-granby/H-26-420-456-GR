@@ -8,7 +8,11 @@ builder.Services.AddControllersWithViews();
 
 // Configure DbContext
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Exercice3_ModeleEFCoreDBContext")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Exercice3_ModeleEFCoreDBContext"))
+           .UseLazyLoadingProxies()
+           .LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information)
+           .EnableSensitiveDataLogging()
+           .EnableDetailedErrors());
 
 var app = builder.Build();
 

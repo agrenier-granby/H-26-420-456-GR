@@ -5,6 +5,6 @@ namespace S5_B_LT_LINQ.Models
         public int Id { get; set; }
         public string Nom { get; set; } = string.Empty;
         public int SuperficieM2 { get; set; }
-        public List<Employe> Employes { get; set; } = new List<Employe>();
+        public virtual List<Employe> Employes { get; set; } = new List<Employe>();
     }
 }

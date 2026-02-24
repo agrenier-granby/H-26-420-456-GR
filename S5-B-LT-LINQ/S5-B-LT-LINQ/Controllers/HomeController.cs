@@ -64,5 +64,53 @@ namespace S5_B_LT_LINQ.Controllers
                 .ToList();
             return View("LinqExemple", employes);
         }
+
+        public IActionResult EagerLoading()
+        {
+            // EAGER LOADING : Chargement anticipé avec Include()
+            // Génère UNE SEULE requête SQL avec des JOINs
+            // Exemple SQL : 
+            // SELECT TOP(100) e.*, p.*, d.*
+            // FROM Employes e
+            // LEFT JOIN Pays p ON e.PaysId = p.Id
+            // LEFT JOIN Departements d ON e.DepartementId = d.Id
+
+            var employes = _context.Employes
+                .Include(e => e.PaysOrigine)      // JOIN avec Pays
+                .Include(e => e.Departement)      // JOIN avec Departements
+                .Take(100)
+                .ToList();
+
+            // Résultat: TOUTES les données sont chargées en mémoire en 1 seul aller-retour DB
+            return View(employes);
+        }
+
+        public IActionResult LazyLoading()
+        {
+            // LAZY LOADING : Chargement paresseux avec proxies et virtual
+            // Génère PLUSIEURS requêtes SQL (problème N+1)
+
+            // 1ère requête : Récupère SEULEMENT les employés
+            // SELECT TOP(100) * FROM Employes
+            var employes = _context.Employes
+                .Take(100)
+                .ToList();
+
+            // ATTENTION: Chaque accès à une propriété de navigation génère une NOUVELLE requête!
+            //foreach (var e in employes)
+            //{
+            //    // À chaque itération, 1 requête pour charger le Departement
+            //    // SELECT * FROM Departements WHERE Id = @p0
+            //    System.Diagnostics.Debug.WriteLine(e.Departement?.Nom);
+            //}
+
+            // Résultat pour 100 employés: 
+            // - 1 requête pour les employés
+            // - 100 requêtes pour PaysOrigine (dans la vue)
+            // - 100 requêtes pour Departement (dans la vue + foreach)
+            // = 201 requêtes SQL au total! (Problème N+1)
+
+            return View(employes);
+        }
     }
 }

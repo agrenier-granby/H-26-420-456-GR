@@ -8,12 +8,12 @@ namespace S5_B_LT_LINQ.Models
         public DateTime DateEmbauche { get; set; }
         public double SalaireAnnuel { get; set; }
         public int PaysId { get; set; }
-        public Pays? PaysOrigine { get; set; }
+        public virtual Pays? PaysOrigine { get; set; }
 
-        public Departement? Departement { get; set; }
+        public virtual Departement? Departement { get; set; }
         public int DepartementId { get; set; }
 
-        public ICollection<Projet> ProjetsImpliques { get; set; } = new List<Projet>();
-        public ICollection<EmployeProjet> EmployeProjets { get; set; } = new List<EmployeProjet>();
+        public virtual ICollection<Projet> ProjetsImpliques { get; set; } = new List<Projet>();
+        public virtual ICollection<EmployeProjet> EmployeProjets { get; set; } = new List<EmployeProjet>();
     }
 }

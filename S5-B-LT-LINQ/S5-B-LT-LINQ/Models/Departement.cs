@@ -11,9 +11,9 @@ namespace S5_B_LT_LINQ.Models
 
         public double BudgetAnnuel { get; set; }
 
-        public List<Employe> Employes { get; set; } = new List<Employe>();
+        public virtual List<Employe> Employes { get; set; } = new List<Employe>();
 
-        public Employe? Directeur { get; set; }
+        public virtual Employe? Directeur { get; set; }
         public int? DirecteurId { get; set; }
     }
 }

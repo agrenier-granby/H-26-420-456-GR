@@ -8,7 +8,7 @@ namespace S5_B_LT_LINQ.Models
         public DateTime? DateDebut { get; set; }
         public DateTime? DateFin { get; set; }
 
-        public ICollection<Employe> Employes { get; set; } = new List<Employe>();
-        public ICollection<EmployeProjet> EmployeProjets { get; set; } = new List<EmployeProjet>();
+        public virtual ICollection<Employe> Employes { get; set; } = new List<Employe>();
+        public virtual ICollection<EmployeProjet> EmployeProjets { get; set; } = new List<EmployeProjet>();
     }
 }
