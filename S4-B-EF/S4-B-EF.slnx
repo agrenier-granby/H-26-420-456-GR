@@ -1,3 +1,4 @@
 <Solution>
-  <Project Path="S4-B-EF.csproj" />
+  <Project Path="S4-B-EF.Seeder/S4-B-EF.Seeder.csproj" />
+  <Project Path="S4-B-EF/S4-B-EF.csproj" />
 </Solution>
