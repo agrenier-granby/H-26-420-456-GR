@@ -37,13 +37,5 @@ namespace Exercices_Formulaire_Web.Controllers
             var vm = new EmployeCreateVM { Nom = "Inconnu", Age = 18 };
             return View(vm);
         }
-
-        [HttpPost]
-        public IActionResult Create(EmployeCreateVM employe)
-        {
-            _context.Employes.Add(employe);
-            _context.SaveChanges();
-            return RedirectToAction("Index");
-        }
     };
 }
