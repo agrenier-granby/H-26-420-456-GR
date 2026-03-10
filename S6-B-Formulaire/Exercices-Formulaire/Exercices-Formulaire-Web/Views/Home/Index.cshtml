@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Gestion des Employés et Départements</h1>
+
+    <div class="mt-4">
+        <h3>Employés</h3>
+        <p>
+            <a asp-controller="Employes" asp-action="Index" class="btn btn-primary">Liste des employés</a>
+            <a asp-controller="Employes" asp-action="Create" class="btn btn-success">Créer un employé</a>
+        </p>
+    </div>
+
+    <div class="mt-4">
+        <h3>Départements</h3>
+        <p>
+            <a asp-controller="Departements" asp-action="Index" class="btn btn-primary">Liste des départements</a>
+            <a asp-controller="Departements" asp-action="Create" class="btn btn-success">Créer un département</a>
+        </p>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+@model IEnumerable<Exercices_Formulaire_Web.Models.Departement>
+
+@{
+    ViewData["Title"] = "Liste des départements";
+}
+
+<h1>Liste des départements</h1>
+
+<p>
+    <a asp-action="Create">Créer un nouveau département</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Budget</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>@item.Nom</td>
+            <td>@item.Budget.ToString("C")</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Modifier</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
