@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using S4_A_EF.Data;
 using S4_A_EF.Models;
+using S4_A_EF.ViewModels;
 
 namespace S4_A_EF.Controllers
 {
@@ -22,7 +18,16 @@ namespace S4_A_EF.Controllers
         // GET: Employes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Employes.ToListAsync());
+            var employes = await _context.Employes.ToListAsync();
+            var viewModel = employes.Select(e => new EmployeIndexViewModel
+            {
+                Id = e.Id,
+                Nom = e.Nom,
+                Age = e.Age,
+                DateEmbauche = e.DateEmbauche,
+                SalaireAnnuel = e.SalaireAnnuel
+            }).ToList();
+            return View(viewModel);
         }
 
         // GET: Employes/Details/5
@@ -40,7 +45,16 @@ namespace S4_A_EF.Controllers
                 return NotFound();
             }
 
-            return View(employe);
+            var viewModel = new EmployeDetailsViewModel
+            {
+                Id = employe.Id,
+                Nom = employe.Nom,
+                Age = employe.Age,
+                DateEmbauche = employe.DateEmbauche,
+                SalaireAnnuel = employe.SalaireAnnuel
+            };
+
+            return View(viewModel);
         }
 
         // GET: Employes/Create
@@ -54,15 +68,23 @@ namespace S4_A_EF.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nom,Age,DateEmbauche,SalaireAnnuel,PaysId")] Employe employe)
+        public async Task<IActionResult> Create(EmployeCreateViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
+                var employe = new Employe
+                {
+                    Nom = viewModel.Nom,
+                    Age = viewModel.Age,
+                    DateEmbauche = viewModel.DateEmbauche,
+                    SalaireAnnuel = viewModel.SalaireAnnuel,
+                    PaysId = viewModel.PaysId
+                };
                 _context.Employes.Add(employe);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(employe);
+            return View(viewModel);
         }
 
         // GET: Employes/Edit/5
@@ -78,7 +100,18 @@ namespace S4_A_EF.Controllers
             {
                 return NotFound();
             }
-            return View(employe);
+
+            var viewModel = new EmployeEditViewModel
+            {
+                Id = employe.Id,
+                Nom = employe.Nom,
+                Age = employe.Age,
+                DateEmbauche = employe.DateEmbauche,
+                SalaireAnnuel = employe.SalaireAnnuel,
+                PaysId = employe.PaysId
+            };
+
+            return View(viewModel);
         }
 
         // POST: Employes/Edit/5
@@ -86,9 +119,9 @@ namespace S4_A_EF.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nom,Age,DateEmbauche,SalaireAnnuel,PaysId")] Employe employe)
+        public async Task<IActionResult> Edit(int id, EmployeEditViewModel viewModel)
         {
-            if (id != employe.Id)
+            if (id != viewModel.Id)
             {
                 return NotFound();
             }
@@ -97,12 +130,24 @@ namespace S4_A_EF.Controllers
             {
                 try
                 {
+                    var employe = await _context.Employes.FindAsync(id);
+                    if (employe == null)
+                    {
+                        return NotFound();
+                    }
+
+                    employe.Nom = viewModel.Nom;
+                    employe.Age = viewModel.Age;
+                    employe.DateEmbauche = viewModel.DateEmbauche;
+                    employe.SalaireAnnuel = viewModel.SalaireAnnuel;
+                    employe.PaysId = viewModel.PaysId;
+
                     _context.Update(employe);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EmployeExists(employe.Id))
+                    if (!EmployeExists(viewModel.Id))
                     {
                         return NotFound();
                     }
@@ -113,7 +158,7 @@ namespace S4_A_EF.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(employe);
+            return View(viewModel);
         }
 
         // GET: Employes/Delete/5
@@ -131,7 +176,16 @@ namespace S4_A_EF.Controllers
                 return NotFound();
             }
 
-            return View(employe);
+            var viewModel = new EmployeDeleteViewModel
+            {
+                Id = employe.Id,
+                Nom = employe.Nom,
+                Age = employe.Age,
+                DateEmbauche = employe.DateEmbauche,
+                SalaireAnnuel = employe.SalaireAnnuel
+            };
+
+            return View(viewModel);
         }
 
         // POST: Employes/Delete/5

@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using S5_B_LT_LINQ.Data;
 using S5_B_LT_LINQ.Models;
+using S5_B_LT_LINQ.ViewModels;
 
 namespace S5_B_LT_LINQ.Controllers
 {
@@ -17,7 +19,17 @@ namespace S5_B_LT_LINQ.Controllers
         // GET: Employes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Employes.ToListAsync());
+            var employes = await _context.Employes.ToListAsync();
+            var viewModel = employes.Select(e => new EmployeIndexViewModel
+            {
+                Id = e.Id,
+                Nom = e.Nom,
+                Age = e.Age,
+                DateEmbauche = e.DateEmbauche,
+                SalaireAnnuel = e.SalaireAnnuel
+            }).ToList();
+
+            return View(viewModel);
         }
 
         // GET: Employes/Details/5
@@ -29,19 +41,44 @@ namespace S5_B_LT_LINQ.Controllers
             }
 
             var employe = await _context.Employes
+                .Include(e => e.PaysOrigine)
+                .Include(e => e.Departement)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (employe == null)
             {
                 return NotFound();
             }
 
-            return View(employe);
+            var viewModel = new EmployeDetailsViewModel
+            {
+                Id = employe.Id,
+                Nom = employe.Nom,
+                Age = employe.Age,
+                DateEmbauche = employe.DateEmbauche,
+                SalaireAnnuel = employe.SalaireAnnuel,
+                PaysOrigine = employe.PaysOrigine?.Nom,
+                Departement = employe.Departement?.Nom
+            };
+
+            return View(viewModel);
         }
 
         // GET: Employes/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            var viewModel = new EmployeFormViewModel
+            {
+                DateEmbauche = DateTime.Today,
+                PaysList = await _context.Pays
+                    .Select(p => new SelectListItem { Value = p.Id.ToString(), Text = p.Nom })
+                    .ToListAsync(),
+                DepartementsList = await _context.Departements
+                    .Select(d => new SelectListItem { Value = d.Id.ToString(), Text = d.Nom })
+                    .ToListAsync()
+            };
+
+            return View(viewModel);
         }
 
         // POST: Employes/Create
@@ -49,15 +86,33 @@ namespace S5_B_LT_LINQ.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nom,Age,DateEmbauche,SalaireAnnuel,PaysId")] Employe employe)
+        public async Task<IActionResult> Create(EmployeFormViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
+                var employe = new Employe
+                {
+                    Nom = viewModel.Nom,
+                    Age = viewModel.Age,
+                    DateEmbauche = viewModel.DateEmbauche,
+                    SalaireAnnuel = viewModel.SalaireAnnuel,
+                    PaysId = viewModel.PaysId,
+                    DepartementId = viewModel.DepartementId
+                };
+
                 _context.Employes.Add(employe);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(employe);
+
+            viewModel.PaysList = await _context.Pays
+                .Select(p => new SelectListItem { Value = p.Id.ToString(), Text = p.Nom })
+                .ToListAsync();
+            viewModel.DepartementsList = await _context.Departements
+                .Select(d => new SelectListItem { Value = d.Id.ToString(), Text = d.Nom })
+                .ToListAsync();
+
+            return View(viewModel);
         }
 
         // GET: Employes/Edit/5
@@ -73,7 +128,25 @@ namespace S5_B_LT_LINQ.Controllers
             {
                 return NotFound();
             }
-            return View(employe);
+
+            var viewModel = new EmployeFormViewModel
+            {
+                Id = employe.Id,
+                Nom = employe.Nom,
+                Age = employe.Age,
+                DateEmbauche = employe.DateEmbauche,
+                SalaireAnnuel = employe.SalaireAnnuel,
+                PaysId = employe.PaysId,
+                DepartementId = employe.DepartementId,
+                PaysList = await _context.Pays
+                    .Select(p => new SelectListItem { Value = p.Id.ToString(), Text = p.Nom })
+                    .ToListAsync(),
+                DepartementsList = await _context.Departements
+                    .Select(d => new SelectListItem { Value = d.Id.ToString(), Text = d.Nom })
+                    .ToListAsync()
+            };
+
+            return View(viewModel);
         }
 
         // POST: Employes/Edit/5
@@ -81,9 +154,9 @@ namespace S5_B_LT_LINQ.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nom,Age,DateEmbauche,SalaireAnnuel,PaysId")] Employe employe)
+        public async Task<IActionResult> Edit(int id, EmployeFormViewModel viewModel)
         {
-            if (id != employe.Id)
+            if (id != viewModel.Id)
             {
                 return NotFound();
             }
@@ -92,12 +165,25 @@ namespace S5_B_LT_LINQ.Controllers
             {
                 try
                 {
+                    var employe = await _context.Employes.FindAsync(id);
+                    if (employe == null)
+                    {
+                        return NotFound();
+                    }
+
+                    employe.Nom = viewModel.Nom;
+                    employe.Age = viewModel.Age;
+                    employe.DateEmbauche = viewModel.DateEmbauche;
+                    employe.SalaireAnnuel = viewModel.SalaireAnnuel;
+                    employe.PaysId = viewModel.PaysId;
+                    employe.DepartementId = viewModel.DepartementId;
+
                     _context.Update(employe);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EmployeExists(employe.Id))
+                    if (!EmployeExists(viewModel.Id))
                     {
                         return NotFound();
                     }
@@ -108,7 +194,15 @@ namespace S5_B_LT_LINQ.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(employe);
+
+            viewModel.PaysList = await _context.Pays
+                .Select(p => new SelectListItem { Value = p.Id.ToString(), Text = p.Nom })
+                .ToListAsync();
+            viewModel.DepartementsList = await _context.Departements
+                .Select(d => new SelectListItem { Value = d.Id.ToString(), Text = d.Nom })
+                .ToListAsync();
+
+            return View(viewModel);
         }
 
         // GET: Employes/Delete/5
@@ -121,12 +215,22 @@ namespace S5_B_LT_LINQ.Controllers
 
             var employe = await _context.Employes
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (employe == null)
             {
                 return NotFound();
             }
 
-            return View(employe);
+            var viewModel = new EmployeDeleteViewModel
+            {
+                Id = employe.Id,
+                Nom = employe.Nom,
+                Age = employe.Age,
+                DateEmbauche = employe.DateEmbauche,
+                SalaireAnnuel = employe.SalaireAnnuel
+            };
+
+            return View(viewModel);
         }
 
         // POST: Employes/Delete/5

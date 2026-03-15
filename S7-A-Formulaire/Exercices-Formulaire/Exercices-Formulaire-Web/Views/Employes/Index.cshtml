@@ -1,4 +1,4 @@
-@model IEnumerable<Exercices_Formulaire_Web.Models.Employe>
+@model IEnumerable<Exercices_Formulaire_Web.ViewModels.EmployeIndexVM>
 
 @{
     ViewData["Title"] = "Liste des employés";
@@ -32,8 +32,8 @@
             <td>@item.SalaireAnnuel.ToString("C")</td>
             <td>@item.Statut</td>
             <td>@item.TypeRemuneration</td>
-            <td>@item.PaysOrigine?.Nom</td>
-            <td>@item.Departement?.Nom</td>
+            <td>@item.PaysOrigineNom</td>
+            <td>@item.DepartementNom</td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Modifier</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Détails</a> |

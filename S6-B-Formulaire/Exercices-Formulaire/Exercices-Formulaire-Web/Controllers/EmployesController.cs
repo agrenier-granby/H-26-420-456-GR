@@ -25,7 +25,19 @@ namespace Exercices_Formulaire_Web.Controllers
         public async Task<IActionResult> Index()
         {
             var employes = await _employesService.GetAllAsync();
-            return View(employes);
+            var vm = employes.Select(e => new EmployeIndexVM
+            {
+                Id = e.Id,
+                Nom = e.Nom,
+                Age = e.Age,
+                DateEmbauche = e.DateEmbauche,
+                SalaireAnnuel = e.SalaireAnnuel,
+                EstEnEmploi = e.EstEnEmploi,
+                PaysOrigineNom = e.PaysOrigine?.Nom ?? "N/A",
+                DepartementNom = e.Departement?.Nom ?? "N/A"
+            }).ToList();
+
+            return View(vm);
         }
 
         [HttpGet]

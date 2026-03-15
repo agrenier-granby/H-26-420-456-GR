@@ -17,7 +17,14 @@ namespace Exercices_Formulaire_Web.Controllers
         public async Task<IActionResult> Index()
         {
             var departements = await _departementsService.GetAllAsync();
-            return View(departements);
+            var departementsVM = departements.Select(d => new DepartementIndexVM
+            {
+                Id = d.Id,
+                Nom = d.Nom,
+                Budget = d.Budget
+            }).ToList();
+
+            return View(departementsVM);
         }
 
         [HttpGet]

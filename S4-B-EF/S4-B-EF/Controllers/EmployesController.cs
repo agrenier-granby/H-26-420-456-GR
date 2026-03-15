@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using S4_B_EF.Data;
 using S4_B_EF.Models;
+using S4_B_EF.ViewModels;
 
 namespace S4_B_EF.Controllers
 {
@@ -17,7 +18,16 @@ namespace S4_B_EF.Controllers
         // GET: Employes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Employes.ToListAsync());
+            var employes = await _context.Employes.ToListAsync();
+            var viewModel = employes.Select(e => new EmployeIndexViewModel
+            {
+                Id = e.Id,
+                Nom = e.Nom,
+                Age = e.Age,
+                DateEmbauche = e.DateEmbauche,
+                SalaireAnnuel = e.SalaireAnnuel
+            }).ToList();
+            return View(viewModel);
         }
 
         // GET: Employes/Details/5
@@ -126,7 +136,16 @@ namespace S4_B_EF.Controllers
                 return NotFound();
             }
 
-            return View(employe);
+            var viewModel = new EmployeDeleteViewModel
+            {
+                Id = employe.Id,
+                Nom = employe.Nom,
+                Age = employe.Age,
+                DateEmbauche = employe.DateEmbauche,
+                SalaireAnnuel = employe.SalaireAnnuel
+            };
+
+            return View(viewModel);
         }
 
         // POST: Employes/Delete/5

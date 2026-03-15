@@ -1,0 +1,11 @@
+namespace S4_A_EF.ViewModels
+{
+    public class EmployeDetailsViewModel
+    {
+        public int Id { get; set; }
+        public string Nom { get; set; } = string.Empty;
+        public int Age { get; set; }
+        public DateTime DateEmbauche { get; set; }
+        public double SalaireAnnuel { get; set; }
+    }
+}

@@ -1,0 +1,13 @@
+namespace S5_B_LT_LINQ.ViewModels
+{
+    public class EmployeDetailsViewModel
+    {
+        public int Id { get; set; }
+        public string Nom { get; set; } = string.Empty;
+        public int Age { get; set; }
+        public DateTime DateEmbauche { get; set; }
+        public double SalaireAnnuel { get; set; }
+        public string? PaysOrigine { get; set; }
+        public string? Departement { get; set; }
+    }
+}
