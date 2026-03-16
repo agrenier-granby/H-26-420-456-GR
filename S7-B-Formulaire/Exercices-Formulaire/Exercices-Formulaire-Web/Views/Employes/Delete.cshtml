@@ -1,0 +1,28 @@
+@model Exercices_Formulaire_Web.ViewModels.EmployeIndexVM
+
+@{
+    ViewData["Title"] = "Supprimer l'employé";
+}
+
+<h1>Supprimer l'employé</h1>
+
+<h3>Êtes-vous certain de vouloir supprimer cet employé?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">Nom</dt>
+        <dd class="col-sm-9">@Model.Nom</dd>
+
+        <dt class="col-sm-3">Titre</dt>
+        <dd class="col-sm-9">@Model.Titre</dd>
+
+        <dt class="col-sm-3">Département</dt>
+        <dd class="col-sm-9">@Model.DepartementNom</dd>
+    </dl>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Supprimer" class="btn btn-danger" /> |
+        <a asp-action="Index">Retour à la liste</a>
+    </form>
+</div>

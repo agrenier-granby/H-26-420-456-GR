@@ -1,0 +1,30 @@
+@model Exercices_Formulaire_Web.ViewModels.FormulaireDepartementVM
+
+@{
+    ViewData["Title"] = "Créer un nouveau département";
+}
+
+<h1>Créer un nouveau département</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" method="post">
+            <div class="form-group">
+                <label asp-for="Nom" class="control-label"></label>
+                <input asp-for="Nom" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Budget" class="control-label"></label>
+                <input asp-for="Budget" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Créer" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="Home" asp-action="Index">Retour à l'accueil</a>
+</div>

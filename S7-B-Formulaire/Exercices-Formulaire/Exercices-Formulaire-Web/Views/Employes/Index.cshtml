@@ -1,0 +1,49 @@
+@model IEnumerable<Exercices_Formulaire_Web.ViewModels.EmployeIndexVM>
+
+@{
+    ViewData["Title"] = "Liste des employés";
+}
+
+<h1>Liste des employés</h1>
+
+<p>
+    <a asp-action="Create">Créer un nouvel employé</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Âge</th>
+            <th>Date de naissance</th>
+            <th>Date d'embauche</th>
+            <th>Salaire annuel</th>
+            <th>Titre</th>
+            <th>Statut</th>
+            <th>Type rémunération</th>
+            <th>Pays</th>
+            <th>Département</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>@item.Nom</td>
+            <td>@item.Age</td>
+            <td>@item.DateNaissance.ToShortDateString()</td>
+            <td>@item.DateEmbauche.ToShortDateString()</td>
+            <td>@item.SalaireAnnuel.ToString("C")</td>
+            <td>@item.Titre</td>
+            <td>@item.Statut</td>
+            <td>@item.TypeRemuneration</td>
+            <td>@item.PaysOrigineNom</td>
+            <td>@item.DepartementNom</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Modifier</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Détails</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

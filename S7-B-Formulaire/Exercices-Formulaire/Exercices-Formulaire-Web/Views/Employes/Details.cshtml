@@ -1,0 +1,46 @@
+@model Exercices_Formulaire_Web.ViewModels.EmployeIndexVM
+
+@{
+    ViewData["Title"] = "Détails de l'employé";
+}
+
+<h1>Détails de l'employé</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">Nom</dt>
+        <dd class="col-sm-9">@Model.Nom</dd>
+
+        <dt class="col-sm-3">Âge</dt>
+        <dd class="col-sm-9">@Model.Age</dd>
+
+        <dt class="col-sm-3">Date de naissance</dt>
+        <dd class="col-sm-9">@Model.DateNaissance.ToShortDateString()</dd>
+
+        <dt class="col-sm-3">Date d'embauche</dt>
+        <dd class="col-sm-9">@Model.DateEmbauche.ToShortDateString()</dd>
+
+        <dt class="col-sm-3">Salaire annuel</dt>
+        <dd class="col-sm-9">@Model.SalaireAnnuel.ToString("C")</dd>
+
+        <dt class="col-sm-3">Titre</dt>
+        <dd class="col-sm-9">@Model.Titre</dd>
+
+        <dt class="col-sm-3">Statut</dt>
+        <dd class="col-sm-9">@Model.Statut</dd>
+
+        <dt class="col-sm-3">Type rémunération</dt>
+        <dd class="col-sm-9">@Model.TypeRemuneration</dd>
+
+        <dt class="col-sm-3">Pays</dt>
+        <dd class="col-sm-9">@Model.PaysOrigineNom</dd>
+
+        <dt class="col-sm-3">Département</dt>
+        <dd class="col-sm-9">@Model.DepartementNom</dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Modifier</a> |
+    <a asp-action="Index">Retour à la liste</a>
+</div>

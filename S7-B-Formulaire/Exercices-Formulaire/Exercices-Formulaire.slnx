@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Exercices-Formulaire-Seeder/Exercices-Formulaire-Seeder.csproj" />
+  <Project Path="Exercices-Formulaire-Web/Exercices-Formulaire-Web.csproj" />
+</Solution>
