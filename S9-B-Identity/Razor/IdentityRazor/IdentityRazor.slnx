@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="IdentityRazor.Seeder/IdentityRazor.Seeder.csproj" Id="d0858694-3e08-426a-b9dc-d6dde6e8cb03" />
+  <Project Path="IdentityRazor/IdentityRazor.csproj" />
+</Solution>
