@@ -1,0 +1,53 @@
+﻿@using IdentityMVC.Models
+@{
+    ViewData["Title"] = "Accueil";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Bienvenue</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+@if (User.Identity?.IsAuthenticated == true)
+{
+    <div class="mt-4">
+        <h4>Votre accès</h4>
+
+        @if (User.IsInRole(Roles.Administrateur))
+        {
+            <div class="alert alert-danger d-flex align-items-center justify-content-between">
+                <span><strong>Administrateur</strong> — Vous avez accès à toutes les fonctionnalités du site.</span>
+                <a asp-action="Admin" class="btn btn-sm btn-danger">Panneau d'administration</a>
+            </div>
+        }
+
+        @if (User.IsInRole(Roles.Gestionnaire))
+        {
+            <div class="alert alert-warning d-flex align-items-center justify-content-between">
+                <span><strong>Gestionnaire</strong> — Vous avez accès à l'espace de gestion.</span>
+                <a asp-action="Gestion" class="btn btn-sm btn-warning">Espace gestion</a>
+            </div>
+        }
+
+        @if (User.IsInRole(Roles.Membre))
+        {
+            <div class="alert alert-info">
+                <strong>Membre</strong> — Bienvenue dans votre espace membre.
+            </div>
+        }
+
+        @if (!User.IsInRole(Roles.Administrateur) && !User.IsInRole(Roles.Gestionnaire) && !User.IsInRole(Roles.Membre))
+        {
+            <div class="alert alert-secondary">
+                Aucun rôle assigné à votre compte.
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="mt-4 text-center">
+        <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-primary">Se connecter</a>
+        <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-secondary ms-2">S'inscrire</a>
+    </div>
+}

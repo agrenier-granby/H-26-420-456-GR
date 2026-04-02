@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="IdentityMVC.Seeder/IdentityMVC.Seeder.csproj" Id="d8cedcea-4e72-4a44-9650-de94538ae9b2" />
+  <Project Path="IdentityMVC/IdentityMVC.csproj" />
+</Solution>

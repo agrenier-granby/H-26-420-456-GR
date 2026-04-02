@@ -1,0 +1,31 @@
+@using IdentityMVC.Models
+@{
+    ViewData["Title"] = "Gestion";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="alert alert-warning">
+    <strong>Zone réservée aux gestionnaires et administrateurs.</strong>
+    Seuls les utilisateurs ayant le rôle <em>Gestionnaire</em> ou <em>Administrateur</em> peuvent accéder à cette page.
+</div>
+
+<h4>Fonctionnalités de gestion</h4>
+<ul>
+    <li>Gérer les employés</li>
+    <li>Gérer les étudiants</li>
+    <li>Gérer les enseignants</li>
+    <li>Consulter les statistiques</li>
+</ul>
+
+@if (User.IsInRole(Roles.Administrateur))
+{
+    <div class="alert alert-info mt-3">
+        Vous êtes également <strong>Administrateur</strong>.
+        <a asp-action="Admin" class="btn btn-sm btn-danger ms-2">Panneau d'administration</a>
+    </div>
+}
+
+<div class="mt-3">
+    <a asp-action="Index" class="btn btn-secondary">Retour à l'accueil</a>
+</div>
