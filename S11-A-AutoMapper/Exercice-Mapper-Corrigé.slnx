@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Exercice-Mapper-Seeder/Exercice-Mapper-Seeder.csproj" />
+  <Project Path="Exercice-Mapper/Exercice-Mapper.csproj" />
+</Solution>

@@ -1,0 +1,70 @@
+﻿@model EmployeVM
+
+@{
+    ViewData["Title"] = "Création";
+}
+
+<h1>Formulaire de création d'un employé</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Nom" class="control-label"></label>
+                <input asp-for="Nom" class="form-control" />
+                <span asp-validation-for="Nom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Age" class="control-label"></label>
+                <input asp-for="Age" class="form-control" />
+                <span asp-validation-for="Age" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateEmbauche" class="control-label"></label>
+                <input asp-for="DateEmbauche" type="date" class="form-control" />
+                <span asp-validation-for="DateEmbauche" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Salaire" class="control-label"></label>
+                <input asp-for="Salaire" class="form-control" />
+                <span asp-validation-for="Salaire" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="EstEnEmploi" /> @Html.DisplayNameFor(model => model.EstEnEmploi)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="PaysId" class="control-label"></label>
+
+                @*@Html.DropDownListFor(m => m.PaysId, new SelectList(Model.Pays, "PaysId", "Nom"), "Choisir un pays", new { @class = "form-control" })*@
+                <!-- Utilisation du Tag Helper -->
+                <select asp-for="PaysId" asp-items="Model.PaysSLI" class="form-control"></select>
+                <span asp-validation-for="PaysId" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="DepartementId" class="control-label"></label>
+                @*@Html.DropDownListFor(m => m.DepartementId, new SelectList(Model.Departements, "DepartementId", "Nom"), "Choisir un département", new { @class = "form-control" })*@
+                <select asp-for="DepartementId" asp-items="Model.DepartementsSLI" class="form-control"></select>
+                <span asp-validation-for="DepartementId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Créer" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Retour</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

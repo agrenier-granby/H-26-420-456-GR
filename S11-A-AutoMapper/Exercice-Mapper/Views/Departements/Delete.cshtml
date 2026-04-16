@@ -1,0 +1,33 @@
+﻿@model FormulaireDepartementVM
+
+@{
+    ViewData["Title"] = "Suppression";
+}
+
+<h1>Suppression</h1>
+
+<h3>Êtes-vous sûr de vouloir supprimer ce département?</h3>
+<div>
+    <h4>Département : @Model.Nom</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nom)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nom)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Budget)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Budget)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="DepartementId" />
+        <input type="submit" value="Supprimer" class="btn btn-danger" /> |
+        <a asp-action="Index">Retour</a>
+    </form>
+</div>

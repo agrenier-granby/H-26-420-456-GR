@@ -1,0 +1,65 @@
+﻿@model IEnumerable<EmployeIndexVM>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+<div id="message" class="text-primary">
+    <strong>@TempData["message"]</strong>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Age)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateEmbauche)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EstEnEmploi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Departement)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pays)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Salaire)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Nom)</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Age)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateEmbauche)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EstEnEmploi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Departement)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pays)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Salaire)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

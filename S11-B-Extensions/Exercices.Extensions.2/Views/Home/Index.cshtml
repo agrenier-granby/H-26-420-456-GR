@@ -1,0 +1,30 @@
+﻿@model Diagnostics
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Hostname</th>
+                <th>.NET Version</th>
+                <th>OS Architecture</th>
+                <th>OS Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.HostName</td>
+                <td>@Model.FrameworkDescription</td>
+                <td>@Model.OSArchitecture</td>
+                <td>@Model.OSDescription</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
