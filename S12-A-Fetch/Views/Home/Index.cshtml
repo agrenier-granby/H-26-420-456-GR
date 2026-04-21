@@ -1,0 +1,79 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div id="partie1">
+    <h2>Partie 1</h2>
+    <button id="bouton1" class="btn btn-primary">Bouton 1</button>
+    <div id="reponse1"></div>
+</div>
+
+<div id="partie2">
+    <h2>Partie 2</h2>
+    <button id="bouton2" class="btn btn-primary">Bouton 2</button>
+    <div id="reponse2"></div>
+</div>
+
+<div id="partie3">
+    <h2>Partie 3</h2>
+    <button id="bouton3" class="btn btn-primary">Bouton 3</button>
+    <div id="reponse3"></div>
+</div>
+
+<div id="partie4">
+    <h2>Partie 4</h2>
+    <button id="bouton4" class="btn btn-primary">Bouton 4</button>
+    <div id="reponse4"></div>
+</div>
+
+<div id="partie5">
+    <h2>Partie 5</h2>
+    <form asp-action="Partie5">
+        <button id="bouton5" class="btn btn-primary">Bouton 5</button>
+    </form>
+    <div id="reponse5"></div>
+</div>
+
+<div id="partie6">
+    <h2>Partie 6</h2>
+    <button id="bouton6" class="btn btn-primary">Obtenir la vue</button>
+
+    <div id="partie6_vue"></div>
+</div>
+
+@section scripts
+{
+
+    <script>
+        var home3 = "@Url.Action("Partie3", "Home")";
+    </script>
+    @* <script>
+        function AppelPartie1() {
+            //Appel ajax au serveur
+            fetch('@Url.Action("Privacy", "Home")', {
+                method: "POST",
+            })
+                .then(function (response) {
+                    if (!response.ok) {
+                        throw Error(response.status);
+                    }
+                    return response;
+                })
+                .then(function (response) {
+                    document.querySelector("#reponse1").innerHTML =
+                        "<p>Appel AJAX avec succes!</p>";
+                })
+                .catch(function (error) {
+                    document.querySelector("#reponse1").innerHTML =
+                        "<p>Echec: " + error + "</p>";
+                    console.warn(error);
+                });
+        }
+
+        window.addEventListener("load", () => {
+            document.querySelector("#bouton1").addEventListener("click", AppelPartie1);
+        });
+    </script> *@
+
+    <script src="js/home/index.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,33 @@
+<div class="container border-1 border">
+    <p class="fw-bold">Vue partielle pour les détails</p>
+    <label class="form-label">Obtenir d'autres détails: </label>
+    <button id="obtenirInfoBtn" class=" btn btn-primary">Obtenir les informations</button>
+    <br />
+    <div class="mt-3">
+        <h3>Résultat de l'appel</h3>
+        <div id="obtenirInfosPartialResultat"></div>
+    </div>
+</div>
+<!--
+    Normalement, une vue partielle ne doit pas comprendre de code Javascript dedans, car elle peut être appelé X nombres de fois.
+    Cela ne serait pas optimal de charger le même code X fois.
+    Cependant, il est possible de charger le code Javascript dans la vue partielle et pour ce faire,
+    il faut manuellement récupérer le script en question avec une requête Fetch, créer un élément script et l'ajouter au head de la page.
+-->
+@* <script src="/js/home/obtenirInfosAleatoirePartial.js" defer></script> *@
+@* <script>
+    console.log("_ObtenirInfosAleatoirePartial.cshtml loaded")
+    fetch('/js/home/obtenirInfosAleatoirePartial.js').then(function (response) {
+        if (!response.ok) {
+            return false;
+        }
+        return response.blob();
+    }).then(function (myBlob) {
+        var objectURL = URL.createObjectURL(myBlob);
+        var sc = document.createElement("script");
+        sc.setAttribute("src", objectURL);
+        sc.setAttribute("type", "text/javascript");
+        document.head.appendChild(sc);
+    })
+</script>
+ *@
