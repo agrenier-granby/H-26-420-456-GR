@@ -1,0 +1,43 @@
+@model List<Exercices.UploadFiles.Models.Image>
+
+@{
+    ViewData["Title"] = "Liste des images";
+}
+
+<div class="container">
+    <div class="row mb-4">
+        <div class="col">
+            <h1>Galerie d'images</h1>
+        </div>
+        <div class="col text-end">
+            <a asp-action="Upload" class="btn btn-primary">
+                <i class="bi bi-upload"></i> Téléverser des images
+            </a>
+        </div>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            Aucune image téléversée pour le moment.
+        </div>
+    }
+    else
+    {
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            @foreach (var image in Model)
+            {
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="~/@image.FilePath" class="card-img-top" alt="@image.Title" style="height: 200px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title">@image.Title</h5>
+                            <p class="card-text">@image.Description</p>
+                            <small class="text-muted">Téléversé le @image.UploadedAt.ToString("dd/MM/yyyy à HH:mm")</small>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
