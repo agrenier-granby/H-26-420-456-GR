@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Exercices.Middlewares.Seeder/Exercices.Middlewares.Seeder.csproj" />
+  <Project Path="Exercices.Middlewares/Exercices.Middlewares.csproj" />
+</Solution>

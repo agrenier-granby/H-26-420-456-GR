@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Exercices.Middlewares.Models.Departement>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Créer un nouveau département</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Budget)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Budget)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.DepartementId">Éditer</a> |
+                    <a asp-action="Details" asp-route-id="@item.DepartementId">Détails</a> |
+                    <a asp-action="Delete" asp-route-id="@item.DepartementId">Supprimer</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
