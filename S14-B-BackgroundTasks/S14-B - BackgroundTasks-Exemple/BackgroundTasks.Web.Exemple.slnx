@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="BackgroundTasks.Seeder.Exemple/BackgroundTasks.Seeder.Exemple.csproj" />
+  <Project Path="BackgroundTasks.Web.Exemple/BackgroundTasks.Web.Exemple.csproj" />
+</Solution>

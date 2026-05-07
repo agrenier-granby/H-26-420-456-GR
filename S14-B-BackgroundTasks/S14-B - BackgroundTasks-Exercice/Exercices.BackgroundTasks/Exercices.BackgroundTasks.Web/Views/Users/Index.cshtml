@@ -1,0 +1,25 @@
+﻿@model Exercices.BackgroundTasks.Web.ViewModels.UserListViewModel
+
+@{
+    ViewData["Title"] = "Liste des utilisateurs";
+}
+
+<h2>Liste des utilisateurs</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Date de naissance</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var u in Model.Users)
+        {
+            <tr>
+                <td>@u.FirstName @u.LastName</td>
+                <td>@u.BirthDate.ToShortDateString()</td>
+            </tr>
+        }
+    </tbody>
+</table>

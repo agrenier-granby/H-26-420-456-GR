@@ -1,0 +1,33 @@
+﻿@model NewsletterIndexVM
+
+@{
+    ViewData["Title"] = "Newsletter";
+}
+
+<div class="container">
+    <div>@TempData["Message"]</div>
+    <h1>S'inscrire à l'infolettre</h1>
+    <form method="post" action="/newsletter/subscribe">
+        <div class="form-group">
+            <label for="@Model.Register.Email">Email</label>
+            <input type="@Model.Register.Email" class="form-control" id="email" name="email" required>
+        </div>
+        <!-- TODO: Ajouter les dates de début et de fin! -->
+        <!-- TODO: Ajouter la catégorie pour laquelle on veut s'inscrire.-->
+        <button type="submit" class="btn btn-primary">S'inscrire</button>
+    </form>
+</div>
+
+@if (Model.Subscribers.Any())
+{
+    <div class="container">
+        <h2>
+            Newsletter Subscribers - Vue partielle
+        </h2>
+
+        @foreach (var subscriber in Model.Subscribers)
+        {
+            @await Html.PartialAsync("_SubscriberPartial", subscriber)
+        }
+    </div>
+}
