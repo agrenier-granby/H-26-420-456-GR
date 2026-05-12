@@ -1,4 +1,5 @@
-﻿using BackgroundTasks.Web.Exemple.Services;
+﻿using BackgroundTasks.Web.Exemple.Data;
+using BackgroundTasks.Web.Exemple.Services;
 
 namespace BackgroundTasks.Web.Exemple.BackgroundTasks
 {
@@ -8,11 +9,14 @@ namespace BackgroundTasks.Web.Exemple.BackgroundTasks
         private readonly ILogger<CreatedUsersSinceYesterdayReportTask> _logger;
         private readonly UsersReportingService _reporting;
         private Timer? _timer = null;
+        private IServiceProvider _serviceProvider;
 
         public CreatedUsersSinceYesterdayReportTask(ILogger<CreatedUsersSinceYesterdayReportTask> logger, IServiceProvider serviceProvider)
         {
             _logger = logger;
-            using var scope = serviceProvider.CreateScope(); // this will use `IServiceScopeFactory` internally
+            _serviceProvider = serviceProvider;
+
+            using var scope = _serviceProvider.CreateScope(); // this will use `IServiceScopeFactory` internally
 
             // Il n'est pas possible d'utiliser le Dependancy Injection dans un IHostedService. On doit accéder à nos services "manuellement" avec l'appel à la classe ServiceProvider.
             _reporting = scope.ServiceProvider.GetRequiredService<UsersReportingService>();
@@ -23,7 +27,7 @@ namespace BackgroundTasks.Web.Exemple.BackgroundTasks
             _logger.LogInformation("{Classname} Service running.", nameof(CreatedUsersSinceYesterdayReportTask));
             var now = DateTime.Now;
             var tomorrow = new DateTime(now.Year, now.Month, now.Day).AddDays(1);
-            var secondsUntilMidnight = tomorrow.Subtract(now).Seconds;
+            var secondsUntilMidnight = tomorrow.Subtract(now).TotalSeconds;
 
             _timer = new Timer(DoWork, null, TimeSpan.FromSeconds(secondsUntilMidnight),
                 TimeSpan.FromDays(1));
@@ -33,12 +37,28 @@ namespace BackgroundTasks.Web.Exemple.BackgroundTasks
 
         private async void DoWork(object? state)
         {
-            var count = Interlocked.Increment(ref _executionCount);
+            try
+            {
+                var count = Interlocked.Increment(ref _executionCount);
 
-            _logger.LogInformation("{Classname} Service is working. Generating report for date [{Date:yyyy-MM-dd}], Number of executions since the server is up: {Count}", nameof(CreatedUsersSinceYesterdayReportTask), DateTime.Now, count);
+                _logger.LogInformation("{Classname} Service is working. Generating report for date [{Date:yyyy-MM-dd}], Number of executions since the server is up: {Count}", nameof(CreatedUsersSinceYesterdayReportTask), DateTime.Now, count);
 
-            // Executer l'appel de génération de rapport depuis le service pour obtenir le rapport des utilisateurs créés depuis 24h
-            await _reporting.GenerateReportForNewlyCreatedUsersAsync(DateTime.Today.AddDays(-1));
+                //using var scope = _serviceProvider.CreateScope(); // this will use `IServiceScopeFactory` internally
+                using (var scope = _serviceProvider.CreateScope())
+                {
+                    // Il n'est pas possible d'utiliser le Dependancy Injection dans un IHostedService. On doit accéder à nos services "manuellement"
+                    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                    var log = scope.ServiceProvider.GetRequiredService<ILogger<UsersReportingService>>();
+                    var reporting = new UsersReportingService(log, dbContext);
+
+                    // Executer l'appel de génération de rapport depuis le service pour obtenir le rapport des utilisateurs créés depuis 24h
+                    var a = reporting.GenerateReportForNewlyCreatedUsersAsync(DateTime.Today.AddDays(-1));
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception occurred");
+            }
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
